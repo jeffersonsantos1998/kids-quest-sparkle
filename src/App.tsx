@@ -8,6 +8,8 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AppDashboard from "./pages/AppDashboard";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 import { AuthProvider } from "@/integrations/supabase/AuthProvider";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
@@ -24,6 +26,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registrar" element={<Register />} />
+            <Route path="/recuperar-senha" element={<ForgotPassword />} />
+            <Route path="/atualizar-senha" element={<UpdatePassword />} />
             <Route
               path="/app"
               element={
