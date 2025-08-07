@@ -1,0 +1,12 @@
+{
+  "name": "Rotina Divertida",
+  "short_name": "Rotina",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F1F8FF",
+  "theme_color": "#3B82F6",
+  "description": "Missões diárias gamificadas com estrelas e prêmios para crianças.",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "64x64 32x32 24x24 16x16", "type": "image/x-icon" }
+  ]
+}
