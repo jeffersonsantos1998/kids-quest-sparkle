@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SEO } from "@/components/SEO";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/integrations/supabase/AuthProvider";
 import {
   BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip as RTooltip, ResponsiveContainer,
 } from "recharts";
@@ -28,6 +29,7 @@ const rewards = [
 ];
 
 const AppDashboard = () => {
+  const { signOut, user } = useAuth();
   const [completed, setCompleted] = useState<number[]>([]);
   const [stars, setStars] = useState<number>(835);
 
@@ -79,7 +81,10 @@ const AppDashboard = () => {
           <h1 className="text-3xl font-bold text-primary">Rotina Divertida!</h1>
           <p className="text-muted-foreground">Olá! Complete suas missões ✨</p>
         </div>
-        <Badge className="bg-success text-success-foreground hover:bg-success/90">Cofrinho: R$ 2,00</Badge>
+        <div className="flex items-center gap-3">
+          <Badge className="bg-success text-success-foreground hover:bg-success/90">Cofrinho: R$ 2,00</Badge>
+          <Button variant="outline" onClick={async () => { const { error } = await signOut(); if (error) console.error(error); }}>Sair</Button>
+        </div>
       </header>
 
       <div className="max-w-5xl mx-auto mt-6">
