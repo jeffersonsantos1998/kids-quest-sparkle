@@ -1,9 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuth } from "@/integrations/supabase/AuthProvider";
 
 const Index = () => {
+  const { session } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (session) navigate("/app", { replace: true });
+  }, [session, navigate]);
   return (
     <main className="min-h-screen bg-background flex items-center justify-center p-6">
       <SEO

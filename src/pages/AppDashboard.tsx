@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,9 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { SEO } from "@/components/SEO";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/integrations/supabase/AuthProvider";
-import {
-  BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip as RTooltip, ResponsiveContainer,
-} from "recharts";
+
+const PerformanceChart = lazy(() => import("@/components/PerformanceChart"));
 
 interface Mission { id: number; title: string; stars: number; }
 
@@ -127,15 +126,9 @@ const AppDashboard = () => {
                 <CardTitle>Tarefas Concluídas nos Últimos 7 Dias</CardTitle>
               </CardHeader>
               <CardContent className="h-72">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={last7}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <RTooltip />
-                    <Bar dataKey="tarefas" fill="hsl(var(--primary))" opacity={0.6} />
-                  </BarChart>
-                </ResponsiveContainer>
+                <Suspense fallback={<div className="h-full w-full animate-pulse rounded-md bg-muted" aria-label="Carregando gráfico" />}> 
+                  <PerformanceChart data={last7} />
+                </Suspense>
               </CardContent>
             </Card>
           </TabsContent>

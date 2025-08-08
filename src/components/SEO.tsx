@@ -23,6 +23,15 @@ export const SEO = ({ title, description, canonical, image, type = "website", js
       return meta!;
     };
 
+    const absoluteCanonical = (() => {
+      const href = canonical || window.location.href;
+      try {
+        return href.startsWith("http") ? href : new URL(href, window.location.origin).href;
+      } catch {
+        return window.location.href;
+      }
+    })();
+
     if (description) {
       const metaDesc = ensureMeta("description");
       metaDesc.setAttribute("content", description);
@@ -38,6 +47,15 @@ export const SEO = ({ title, description, canonical, image, type = "website", js
     const ogType = ensureMeta("og:type", "property");
     ogType.setAttribute("content", type);
 
+    const ogUrl = ensureMeta("og:url", "property");
+    ogUrl.setAttribute("content", absoluteCanonical);
+
+    const twitterCard = ensureMeta("twitter:card");
+    twitterCard.setAttribute("content", "summary_large_image");
+
+    const twitterTitle = ensureMeta("twitter:title");
+    twitterTitle.setAttribute("content", title);
+
     if (image) {
       const ogImage = ensureMeta("og:image", "property");
       ogImage.setAttribute("content", image);
@@ -45,15 +63,13 @@ export const SEO = ({ title, description, canonical, image, type = "website", js
       twImage.setAttribute("content", image);
     }
 
-    if (canonical) {
-      let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "canonical";
-        document.head.appendChild(link);
-      }
-      link.href = canonical;
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
     }
+    link.href = absoluteCanonical;
 
     if (jsonLd) {
       let script = document.getElementById("json-ld") as HTMLScriptElement | null;
