@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { SEO } from "@/components/SEO";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/integrations/supabase/AuthProvider";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { Link } from "react-router-dom";
 
 const PerformanceChart = lazy(() => import("@/components/PerformanceChart"));
 
@@ -29,6 +31,7 @@ const rewards = [
 
 const AppDashboard = () => {
   const { signOut, user } = useAuth();
+  const { isAdmin } = useIsAdmin();
   const [completed, setCompleted] = useState<number[]>([]);
   const [stars, setStars] = useState<number>(835);
 
@@ -82,6 +85,7 @@ const AppDashboard = () => {
         </div>
         <div className="flex items-center gap-3">
           <Badge className="bg-success text-success-foreground hover:bg-success/90">Cofrinho: R$ 2,00</Badge>
+          <AdminQuickLink />
           <Button variant="outline" onClick={async () => { const { error } = await signOut(); if (error) console.error(error); }}>Sair</Button>
         </div>
       </header>
@@ -178,6 +182,16 @@ const AppDashboard = () => {
         </Tabs>
       </div>
     </main>
+  );
+};
+
+const AdminQuickLink = () => {
+  const { isAdmin } = useIsAdmin();
+  if (!isAdmin) return null;
+  return (
+    <Link to="/admin" aria-label="Abrir painel de administração">
+      <Button variant="secondary">Admin</Button>
+    </Link>
   );
 };
 

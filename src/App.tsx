@@ -13,6 +13,8 @@ import UpdatePassword from "./pages/UpdatePassword";
 import { AuthProvider } from "@/integrations/supabase/AuthProvider";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { ThemeProvider } from "next-themes";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminRoute from "@/components/AdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +38,14 @@ const App = () => (
                   <ProtectedRoute>
                     <AppDashboard />
                   </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
                 }
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
