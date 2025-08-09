@@ -83,6 +83,9 @@ All colors MUST be HSL.
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
+    --success: 150 60% 35%;
+    --success-foreground: 0 0% 100%;
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -105,5 +108,9 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
+  .story-link {
+    @apply text-primary hover:text-primary/80 underline transition-colors;
   }
 }
