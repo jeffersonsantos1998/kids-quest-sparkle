@@ -1,64 +1,26 @@
-import React from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import AppDashboard from "./pages/AppDashboard";
-import ForgotPassword from "./pages/ForgotPassword";
-import UpdatePassword from "./pages/UpdatePassword";
 import { AuthProvider } from "@/integrations/supabase/AuthProvider";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import { ThemeProvider } from "next-themes";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminRoute from "@/components/AdminRoute";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import AccountSetup from "@/pages/AccountSetup";
+import PaymentSetup from "@/pages/PaymentSetup";
+import { Dashboard } from "@/pages/Dashboard";
 
-const queryClient = new QueryClient();
-
-const App: React.FC = () => {
+function App() {
   return (
     <AuthProvider>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registrar" element={<Register />} />
-                <Route path="/recuperar-senha" element={<ForgotPassword />} />
-                <Route path="/atualizar-senha" element={<UpdatePassword />} />
-                <Route
-                  path="/app"
-                  element={
-                    <ProtectedRoute>
-                      <AppDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin"
-                  element={
-                    <AdminRoute>
-                      <AdminDashboard />
-                    </AdminRoute>
-                  }
-                />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/registrar" element={<Register />} />
+          <Route path="/setup" element={<AccountSetup />} />
+          <Route path="/payment-setup" element={<PaymentSetup />} />
+          <Route path="/app" element={<Dashboard />} />
+          <Route path="*" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </AuthProvider>
   );
-};
+}
 
 export default App;
